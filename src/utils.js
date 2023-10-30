@@ -16,7 +16,7 @@
 import * as ChromeLocale from './locales.js';
 import * as ChromeStorage from './storage.js';
 /** True if development build */
-export const DEBUG = ChromeStorage.get('isDevelopmentBuild', false);
+export const DEBUG = await ChromeStorage.asyncGet('isDevelopmentBuild', false);
 /** Get the extension's name */
 export function getExtensionName() {
     return `chrome-extension://${chrome.runtime.id}`;
