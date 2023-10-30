@@ -65,7 +65,7 @@ export const TYPE = {
 export type ResponseCB = (jsonifiable: any) => void;
 
 /** Method signature for listener */
-type Listener = ((request: IMsgType, sender: chrome.runtime.MessageSender, response: ResponseCB) => boolean);
+type Listener = ((request: IMsgType, sender: chrome.runtime.MessageSender, response: ResponseCB) => boolean | Promise<boolean>);
 
 /**
  * Send a chrome message
