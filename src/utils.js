@@ -14,9 +14,11 @@
  * https://github.com/opus1269/chrome-ext-utils/blob/master/LICENSE
  */
 import * as ChromeLocale from './locales.js';
-import * as ChromeStorage from './storage.js';
-/** True if development build */
-export const DEBUG = await ChromeStorage.asyncGet('isDevelopmentBuild', false);
+import { asyncGet } from './storage.js';
+export let DEBUG = false;
+asyncGet('isDevelopmentBuild', false).then((value) => {
+    DEBUG = value;
+});
 /** Get the extension's name */
 export function getExtensionName() {
     return `chrome-extension://${chrome.runtime.id}`;

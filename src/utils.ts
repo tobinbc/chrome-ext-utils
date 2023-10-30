@@ -17,10 +17,12 @@
  */
 
 import * as ChromeLocale from './locales.js';
-import * as ChromeStorage from './storage.js'; 
+import { asyncGet } from './storage.js';
 
-/** True if development build */
-export const DEBUG = await ChromeStorage.asyncGet('isDevelopmentBuild', false);
+export let DEBUG = false;
+asyncGet('isDevelopmentBuild', false).then((value) => {
+  DEBUG = value;
+})
 
 /** Get the extension's name */
 export function getExtensionName() {
@@ -107,7 +109,7 @@ export async function isMac() {
 }
 
 /** No operation */
-export function noop() {}
+export function noop() { }
 
 /**
  * Determine if a String is null or whitespace only
