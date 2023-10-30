@@ -14,7 +14,7 @@
  */
 
 import * as ChromeGA from './analytics.js';
-import {ChromeLastError} from './last_error.js';
+import { ChromeLastError } from './last_error.js';
 import * as ChromeLocale from './locales.js';
 import * as ChromeUtils from './utils.js';
 
@@ -31,7 +31,7 @@ export function error(msg: string, method?: string, title?: string, extra?: stri
   method = method || ChromeLocale.localize('err_unknownMethod', 'unknownMethod');
   title = title || ChromeLocale.localize('err_error', 'An error occurred');
   const gaMsg = extra ? `${msg} ${extra}` : msg;
-  ChromeLastError.save(new ChromeLastError(title, msg)).catch(() => {});
+  ChromeLastError.save(new ChromeLastError(title, msg)).catch(() => { });
   ChromeGA.error(gaMsg, method);
 }
 
@@ -45,14 +45,14 @@ export function error(msg: string, method?: string, title?: string, extra?: stri
  */
 export function exception(err: Error | null, msg: string | null, fatal?: boolean, title?: string) {
   try {
-    let errMsg = msg;
+    let errMsg = msg || '';
     if (!errMsg && err && err.message) {
       errMsg = err.message;
     } else {
       errMsg = 'Unknown exception.js';
     }
     title = title || ChromeLocale.localize('err_exception', 'An exception occurred');
-    ChromeLastError.save(new ChromeLastError(title, errMsg)).catch(() => {});
+    ChromeLastError.save(new ChromeLastError(title, errMsg)).catch(() => { });
     ChromeGA.exception(err, msg, fatal);
   } catch (err) {
     if (ChromeUtils.DEBUG) {

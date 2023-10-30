@@ -17,12 +17,7 @@
  */
 
 import * as ChromeLocale from './locales.js';
-import * as ChromeStorage from './storage.js';
-
-// removeIf(always)
-import ChromePromise from 'chrome-promise/chrome-promise';
-// endRemoveIf(always)
-const chromep = new ChromePromise();
+import * as ChromeStorage from './storage.js'; 
 
 /** True if development build */
 export const DEBUG = ChromeStorage.get('isDevelopmentBuild', false);
@@ -64,7 +59,7 @@ export function getFullChromeVersion() {
 export async function getPlatformOS() {
   let output = 'Unknown';
   try {
-    const info = await chromep.runtime.getPlatformInfo();
+    const info = await chrome.runtime.getPlatformInfo();
     const os = info.os;
 
     switch (os) {
@@ -217,7 +212,7 @@ export async function wait(time: number) {
  */
 async function isOS(os: string) {
   try {
-    const info = await chromep.runtime.getPlatformInfo();
+    const info = await chrome.runtime.getPlatformInfo();
     return (info.os === os);
   } catch (err) {
     // something went wrong - linux seems to fail this call sometimes

@@ -74,7 +74,7 @@ export const CONFIG: IConfig = {
  * @returns response from server
  */
 export async function doGet(url: string, conf = CONFIG) {
-  const opts: RequestInit = {method: 'GET', headers: new Headers({})};
+  const opts: RequestInit = { method: 'GET', headers: new Headers({}) };
   return await doIt(url, opts, conf);
 }
 
@@ -87,7 +87,7 @@ export async function doGet(url: string, conf = CONFIG) {
  * @returns response from server
  */
 export async function doPost(url: string, conf = CONFIG) {
-  const opts: RequestInit = {method: 'POST', headers: new Headers({})};
+  const opts: RequestInit = { method: 'POST', headers: new Headers({}) };
   return await doIt(url, opts, conf);
 }
 
@@ -118,8 +118,13 @@ export function getError(response: Response) {
  * @throws An error if fetch ultimately fails
  * @returns response from server
  */
-async function processResponse(response: Response, url: string, opts: RequestInit,
-                               conf: IConfig, attempt: number): Promise<any> {
+async function processResponse(
+  response: Response,
+  url: string,
+  opts: RequestInit,
+  conf: IConfig,
+  attempt: number,
+): Promise<any> {
   if (response.ok) {
     // request succeeded - woo hoo!
     if (conf.json) {
@@ -178,7 +183,7 @@ async function getAuthToken(isAuth: boolean, interactive: boolean) {
       return await ChromeAuth.getToken(interactive);
     } catch (err) {
       if (interactive && (err.message.includes('revoked') ||
-          err.message.includes('Authorization page could not be loaded'))) {
+        err.message.includes('Authorization page could not be loaded'))) {
         // try one more time non-interactively
         // Always returns Authorization page error
         // when first registering, Not sure why

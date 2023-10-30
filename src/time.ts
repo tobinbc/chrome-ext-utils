@@ -186,7 +186,7 @@ export class ChromeTime {
       languages.push(navigator.language);
     }
     languages.push('en-US');
-    const opts = {
+    const opts: Intl.DateTimeFormatOptions = {
       hour: 'numeric',
       minute: '2-digit',
       hour12: !ChromeTime.is24Hr(format),

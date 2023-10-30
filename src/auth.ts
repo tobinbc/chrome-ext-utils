@@ -16,11 +16,6 @@
 
 import * as ChromeUtils from './utils.js';
 
-// removeIf(always)
-import ChromePromise from 'chrome-promise/chrome-promise';
-// endRemoveIf(always)
-const chromep = new ChromePromise();
-
 /**
  * Get an OAuth2.0 token
  *
@@ -42,7 +37,8 @@ export async function getToken(interactive = false, scopes?: string[]) {
   if (scopes && scopes.length) {
     request.scopes = scopes;
   }
-  return await chromep.identity.getAuthToken(request);
+  const result = await chrome.identity.getAuthToken(request);
+  return result.token || null;
 }
 
 /**
@@ -62,7 +58,7 @@ export async function removeCachedToken(interactive = false, curToken: string | 
   }
 
   if (oldToken) {
-    await chromep.identity.removeCachedAuthToken({token: oldToken});
+    await chrome.identity.removeCachedAuthToken({ token: oldToken });
   }
 
   return oldToken;
@@ -78,7 +74,7 @@ export async function isSignedIn() {
 
   // try to get a token and check failure message
   try {
-    await chromep.identity.getAuthToken({interactive: false});
+    await chrome.identity.getAuthToken({ interactive: false });
   } catch (err) {
     if (err.message.match(/not signed in/)) {
       ret = false;
@@ -98,7 +94,7 @@ export async function isRevoked() {
 
   // try to get a token and check failure message
   try {
-    await chromep.identity.getAuthToken({interactive: false});
+    await chrome.identity.getAuthToken({ interactive: false });
   } catch (err) {
     if (err.message.match(/OAuth2 not granted or revoked/)) {
       ret = true;

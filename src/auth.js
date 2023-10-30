@@ -12,7 +12,6 @@
  * https://github.com/opus1269/chrome-ext-utils/blob/master/LICENSE
  */
 import * as ChromeUtils from './utils.js';
-const chromep = new ChromePromise();
 /**
  * Get an OAuth2.0 token
  *
@@ -34,7 +33,8 @@ export async function getToken(interactive = false, scopes) {
     if (scopes && scopes.length) {
         request.scopes = scopes;
     }
-    return await chromep.identity.getAuthToken(request);
+    const result = await chrome.identity.getAuthToken(request);
+    return result.token || null;
 }
 /**
  * Remove a cached OAuth2.0 token
@@ -51,7 +51,7 @@ export async function removeCachedToken(interactive = false, curToken = '', scop
         oldToken = await getToken(interactive, scopes);
     }
     if (oldToken) {
-        await chromep.identity.removeCachedAuthToken({ token: oldToken });
+        await chrome.identity.removeCachedAuthToken({ token: oldToken });
     }
     return oldToken;
 }
@@ -64,7 +64,7 @@ export async function isSignedIn() {
     let ret = true;
     // try to get a token and check failure message
     try {
-        await chromep.identity.getAuthToken({ interactive: false });
+        await chrome.identity.getAuthToken({ interactive: false });
     }
     catch (err) {
         if (err.message.match(/not signed in/)) {
@@ -82,7 +82,7 @@ export async function isRevoked() {
     let ret = false;
     // try to get a token and check failure message
     try {
-        await chromep.identity.getAuthToken({ interactive: false });
+        await chrome.identity.getAuthToken({ interactive: false });
     }
     catch (err) {
         if (err.message.match(/OAuth2 not granted or revoked/)) {

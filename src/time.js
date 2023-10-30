@@ -125,7 +125,7 @@ export class ChromeTime {
      */
     static is24Hr(format) {
         let ret = false;
-        if (format === 2 /* HR_24 */) {
+        if (format === 2 /* TIME_FORMAT.HR_24 */) {
             ret = true;
         }
         return ret;

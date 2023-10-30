@@ -15,7 +15,6 @@
  */
 import * as ChromeLocale from './locales.js';
 import * as ChromeStorage from './storage.js';
-const chromep = new ChromePromise();
 /** True if development build */
 export const DEBUG = ChromeStorage.get('isDevelopmentBuild', false);
 /** Get the extension's name */
@@ -51,7 +50,7 @@ export function getFullChromeVersion() {
 export async function getPlatformOS() {
     let output = 'Unknown';
     try {
-        const info = await chromep.runtime.getPlatformInfo();
+        const info = await chrome.runtime.getPlatformInfo();
         const os = info.os;
         switch (os) {
             case 'win':
@@ -191,7 +190,7 @@ export async function wait(time) {
  */
 async function isOS(os) {
     try {
-        const info = await chromep.runtime.getPlatformInfo();
+        const info = await chrome.runtime.getPlatformInfo();
         return (info.os === os);
     }
     catch (err) {

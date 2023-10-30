@@ -17,11 +17,6 @@
 
 import * as ChromeGA from './analytics.js';
 
-// removeIf(always)
-import ChromePromise from 'chrome-promise/chrome-promise';
-// endRemoveIf(always)
-const chromep = new ChromePromise();
-
 /** A Chrome message */
 export interface IMsgType {
   /** a message */
@@ -81,8 +76,7 @@ type Listener = ((request: IMsgType, sender: chrome.runtime.MessageSender, respo
  */
 export async function send(type: IMsgType) {
   try {
-    // TODO remove type cast if added
-    return await (chromep.runtime as any).sendMessage(type) as any;
+    return await chrome.runtime.sendMessage(type);
   } catch (err) {
     if (err.message && !err.message.includes('port closed') && !err.message.includes('Receiving end does not exist')) {
       const msg = `type: ${type.message}, ${err.message}`;

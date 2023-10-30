@@ -13,7 +13,6 @@
  * https://github.com/opus1269/chrome-ext-utils/blob/master/LICENSE
  */
 import * as ChromeGA from './analytics.js';
-const chromep = new ChromePromise();
 /**
  * Chrome Messages
  */
@@ -46,8 +45,7 @@ export const TYPE = {
  */
 export async function send(type) {
     try {
-        // TODO remove type cast if added
-        return await chromep.runtime.sendMessage(type);
+        return await chrome.runtime.sendMessage(type);
     }
     catch (err) {
         if (err.message && !err.message.includes('port closed') && !err.message.includes('Receiving end does not exist')) {

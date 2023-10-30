@@ -160,8 +160,8 @@ export function initialize(trackingId: string, appName: string, appId: string, a
     // @ts-ignore
     // noinspection CommaExpressionJS
     a = s.createElement(o),
-        // @ts-ignore
-        m = s.getElementsByTagName(o)[0];
+      // @ts-ignore
+      m = s.getElementsByTagName(o)[0];
     // @ts-ignore
     a.async = 1;
     // @ts-ignore
@@ -169,7 +169,7 @@ export function initialize(trackingId: string, appName: string, appId: string, a
     // @ts-ignore
     m.parentNode.insertBefore(a, m);
   })(window, document, 'script',
-      'https://www.google-analytics.com/analytics.js', 'ga');
+    'https://www.google-analytics.com/analytics.js', 'ga');
 
   ga('create', trackingId, 'auto');
   // see: http://stackoverflow.com/a/22152353/1958200

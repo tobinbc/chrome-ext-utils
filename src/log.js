@@ -40,7 +40,7 @@ export function error(msg, method, title, extra) {
  */
 export function exception(err, msg, fatal, title) {
     try {
-        let errMsg = msg;
+        let errMsg = msg || '';
         if (!errMsg && err && err.message) {
             errMsg = err.message;
         }

@@ -17,11 +17,6 @@ import * as ChromeGA from './analytics.js';
 import * as ChromeJSON from './json.js';
 import * as ChromeMsg from './msg.js';
 
-// removeIf(always)
-import ChromePromise from 'chrome-promise/chrome-promise';
-// endRemoveIf(always)
-const chromep = new ChromePromise();
-
 export function get<T>(key: string): null | T;
 export function get<T>(key: string, def: boolean): boolean;
 export function get<T>(key: string, def: number): number;
@@ -112,7 +107,7 @@ export async function asyncGet<T>(key: string, def: T): Promise<T>;
 export async function asyncGet<T>(key: string, def?: T): Promise<null | T> {
   let value: null | T = null;
   try {
-    const res = await chromep.storage.local.get([key]);
+    const res = await chrome.storage.local.get([key]);
     value = res[key] as T;
   } catch (err) {
     ChromeGA.error(err.message, 'ChromeStorage.asyncGet');
@@ -148,7 +143,7 @@ export async function asyncSet<T>(key: string, value: T, keyBool?: string) {
     [key]: value,
   };
   try {
-    await chromep.storage.local.set(obj);
+    await chrome.storage.local.set(obj);
   } catch (err) {
     // notify listeners save failed
     ChromeMsg.send(ChromeMsg.TYPE.STORAGE_EXCEEDED).catch(() => {});

@@ -13,11 +13,6 @@
  * https://github.com/opus1269/chrome-ext-utils/blob/master/LICENSE
  */
 
-// removeIf(always)
-import ChromePromise from 'chrome-promise/chrome-promise';
-// endRemoveIf(always)
-const chromep = new ChromePromise();
-
 /**
  * A custom error that can be persisted
  *
@@ -37,7 +32,7 @@ export class ChromeLastError extends Error {
    * @returns A ChromeLastError
    */
   public static async load() {
-    const value = await chromep.storage.local.get('lastError');
+    const value = await chrome.storage.local.get('lastError');
     const details = value.lastError;
     if (details) {
       const lastError = new ChromeLastError(details.title, details.message);
@@ -60,7 +55,7 @@ export class ChromeLastError extends Error {
     };
 
     // persist
-    return await chromep.storage.local.set({lastError: value});
+    return await chrome.storage.local.set({lastError: value});
   }
 
   /**
@@ -70,7 +65,7 @@ export class ChromeLastError extends Error {
    */
   public static async reset() {
     // Save it using the Chrome storage API.
-    return await chromep.storage.local.set({lastError: new ChromeLastError()});
+    return await chrome.storage.local.set({lastError: new ChromeLastError()});
   }
 
   /** Title for error */

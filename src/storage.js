@@ -13,7 +13,6 @@
 import * as ChromeGA from './analytics.js';
 import * as ChromeJSON from './json.js';
 import * as ChromeMsg from './msg.js';
-const chromep = new ChromePromise();
 /**
  * Get a json parsed value from localStorage
  *
@@ -96,7 +95,7 @@ export function safeSet(key, value, keyBool) {
 export async function asyncGet(key, def) {
     let value = null;
     try {
-        const res = await chromep.storage.local.get([key]);
+        const res = await chrome.storage.local.get([key]);
         value = res[key];
     }
     catch (err) {
@@ -130,7 +129,7 @@ export async function asyncSet(key, value, keyBool) {
         [key]: value,
     };
     try {
-        await chromep.storage.local.set(obj);
+        await chrome.storage.local.set(obj);
     }
     catch (err) {
         // notify listeners save failed
